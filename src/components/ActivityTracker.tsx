@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
 import { Car, Zap, ShoppingCart, Calculator } from "lucide-react";
 
 export interface DailyActivities {
@@ -52,18 +53,28 @@ const ActivityTracker = ({ onCalculate }: ActivityTrackerProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-secondary/20 p-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-8 animate-fade-in">
-          <h1 className="text-3xl font-bold bg-gradient-nature bg-clip-text text-transparent mb-4">
+    <div className="min-h-screen bg-gradient-subtle p-4 font-display relative overflow-hidden">
+      {/* Background Animation */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-20 left-20 w-72 h-72 bg-nature/30 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-ocean/20 rounded-full blur-3xl animate-float" style={{ animationDelay: "2s" }}></div>
+      </div>
+
+      <div className="relative max-w-5xl mx-auto z-10">
+        <div className="text-center mb-12 animate-slide-up">
+          <Badge variant="outline" className="mb-4 border-primary/20 backdrop-blur-sm">
+            <Calculator className="w-3 h-3 mr-1" />
+            Input Data
+          </Badge>
+          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-nature bg-clip-text text-transparent mb-6 font-display">
             Tracking Aktivitas Harian
           </h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Catat aktivitas harian Anda untuk menghitung jejak karbon dan mendapatkan rekomendasi personal
           </p>
         </div>
 
-        <Card className="shadow-medium animate-fade-in">
+        <Card className="shadow-strong animate-scale-in backdrop-blur-sm bg-white/95 border-white/20 hover:shadow-glow transition-all duration-500">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Calculator className="w-5 h-5 text-primary" />
@@ -266,9 +277,9 @@ const ActivityTracker = ({ onCalculate }: ActivityTrackerProps) => {
               disabled={!isFormValid()}
               variant="hero"
               size="lg"
-              className="w-full mt-6"
+              className="w-full mt-8 shadow-glow hover:shadow-strong hover:scale-105 transition-all duration-300 group"
             >
-              <Calculator className="w-4 h-4 mr-2" />
+              <Calculator className="w-5 h-5 mr-2 group-hover:animate-pulse" />
               Hitung Jejak Karbon
             </Button>
           </CardContent>

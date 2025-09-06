@@ -9,15 +9,15 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
-        nature: "bg-gradient-nature text-white hover:opacity-90 shadow-soft",
-        ocean: "bg-gradient-ocean text-white hover:opacity-90 shadow-soft",
-        hero: "bg-gradient-hero text-white hover:opacity-90 shadow-medium",
+        default: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-soft hover:shadow-medium transition-all duration-200",
+        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-soft hover:shadow-medium transition-all duration-200",
+        outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-all duration-200",
+        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-soft hover:shadow-medium transition-all duration-200",
+        ghost: "hover:bg-accent hover:text-accent-foreground transition-all duration-200",
+        link: "text-primary underline-offset-4 hover:underline transition-all duration-200",
+        nature: "bg-gradient-nature text-white hover:opacity-90 shadow-nature hover:shadow-strong hover:scale-105 transition-all duration-300",
+        ocean: "bg-gradient-ocean text-white hover:opacity-90 shadow-ocean hover:shadow-strong hover:scale-105 transition-all duration-300",
+        hero: "bg-gradient-hero text-white hover:opacity-90 shadow-glow hover:shadow-strong hover:scale-105 transition-all duration-300",
       },
       size: {
         default: "h-10 px-4 py-2",

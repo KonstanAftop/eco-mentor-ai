@@ -33,16 +33,22 @@ const UserProfile = ({ onComplete }: UserProfileProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4">
-      <Card className="w-full max-w-md shadow-strong animate-fade-in">
-        <CardHeader className="text-center pb-2">
-          <div className="mx-auto mb-4 w-16 h-16 bg-gradient-nature rounded-full flex items-center justify-center">
-            <User className="w-8 h-8 text-white" />
+    <div className="min-h-screen bg-gradient-subtle flex items-center justify-center p-4 font-display relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-nature/20 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-ocean/20 rounded-full blur-3xl animate-float" style={{ animationDelay: "1s" }}></div>
+      </div>
+
+      <Card className="w-full max-w-lg shadow-strong animate-scale-in backdrop-blur-sm bg-white/95 border-white/20 hover:shadow-glow transition-all duration-500">
+        <CardHeader className="text-center pb-4">
+          <div className="mx-auto mb-6 w-20 h-20 bg-gradient-nature rounded-3xl flex items-center justify-center shadow-nature animate-float">
+            <User className="w-10 h-10 text-white" />
           </div>
-          <CardTitle className="text-2xl bg-gradient-nature bg-clip-text text-transparent">
+          <CardTitle className="text-3xl font-bold bg-gradient-nature bg-clip-text text-transparent font-display">
             Profil Pengguna
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-lg">
             Mari berkenalan untuk memberikan edukasi iklim yang personal
           </CardDescription>
         </CardHeader>
@@ -102,8 +108,8 @@ const UserProfile = ({ onComplete }: UserProfileProps) => {
               />
             </div>
 
-            <Button type="submit" className="w-full mt-6" variant="nature">
-              <GraduationCap className="w-4 h-4 mr-2" />
+            <Button type="submit" className="w-full mt-8 shadow-nature hover:shadow-glow hover:scale-105 transition-all duration-300 group" variant="nature" size="lg">
+              <GraduationCap className="w-5 h-5 mr-2 group-hover:animate-pulse" />
               Mulai Belajar
             </Button>
           </form>
