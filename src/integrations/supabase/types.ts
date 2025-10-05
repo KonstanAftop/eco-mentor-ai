@@ -14,7 +14,90 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      climate_knowledge: {
+        Row: {
+          category: string | null
+          content: string
+          created_at: string | null
+          id: string
+          keywords: string[] | null
+          topic: string
+        }
+        Insert: {
+          category?: string | null
+          content: string
+          created_at?: string | null
+          id?: string
+          keywords?: string[] | null
+          topic: string
+        }
+        Update: {
+          category?: string | null
+          content?: string
+          created_at?: string | null
+          id?: string
+          keywords?: string[] | null
+          topic?: string
+        }
+        Relationships: []
+      }
+      user_activities: {
+        Row: {
+          carbon_footprint: number | null
+          consumption_pattern: string | null
+          created_at: string | null
+          electricity_usage: number | null
+          id: string
+          transportation: string | null
+          user_id: string | null
+        }
+        Insert: {
+          carbon_footprint?: number | null
+          consumption_pattern?: string | null
+          created_at?: string | null
+          electricity_usage?: number | null
+          id?: string
+          transportation?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          carbon_footprint?: number | null
+          consumption_pattern?: string | null
+          created_at?: string | null
+          electricity_usage?: number | null
+          id?: string
+          transportation?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      user_profiles: {
+        Row: {
+          age: number | null
+          created_at: string | null
+          education_level: string | null
+          id: string
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          age?: number | null
+          created_at?: string | null
+          education_level?: string | null
+          id?: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          age?: number | null
+          created_at?: string | null
+          education_level?: string | null
+          id?: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
