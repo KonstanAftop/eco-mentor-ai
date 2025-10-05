@@ -1,1 +1,7 @@
 project_id = "ykenfksncujpubnylcxo"
+
+[functions.calculate-carbon]
+verify_jwt = false
+
+[functions.ai-climate-insights]
+verify_jwt = false
