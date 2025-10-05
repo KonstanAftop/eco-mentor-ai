@@ -1,5 +1,4 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -14,44 +13,59 @@ serve(async (req) => {
   try {
     const { transportation, electricityUsage, consumptionPattern, userProfile } = await req.json();
     
-    console.log('Calculating carbon footprint for:', { transportation, electricityUsage, consumptionPattern });
+    console.log('Calculating carbon footprint:', { transportation, electricityUsage, consumptionPattern });
 
-    // Kalkulasi jejak karbon (dalam kg CO2)
-    let carbonFootprint = 0;
-
-    // 1. Transportasi
-    const transportEmissions: Record<string, number> = {
-      'mobil-bensin': 2.3, // kg CO2 per liter
-      'motor': 1.2,
-      'mobil-listrik': 0.5,
-      'angkutan-umum': 0.4,
+    // Faktor emisi (kg CO2 per unit)
+    const emissionFactors = {
+      // Transportasi (per km)
+      'mobil_pribadi': 0.21,
+      'motor': 0.08,
+      'bus': 0.05,
+      'kereta': 0.04,
       'sepeda': 0,
-      'jalan-kaki': 0
+      'jalan_kaki': 0,
+      
+      // Listrik (per kWh)
+      'electricity': 0.85,
+      
+      // Konsumsi
+      'daging_tinggi': 7.2,
+      'daging_sedang': 5.6,
+      'vegetarian': 3.8,
+      'vegan': 2.9,
     };
-    carbonFootprint += transportEmissions[transportation] || 0;
 
-    // 2. Penggunaan Listrik (kWh ke kg CO2)
-    const electricityEmissionFactor = 0.85; // kg CO2 per kWh (Indonesia average)
-    carbonFootprint += electricityUsage * electricityEmissionFactor;
+    // Hitung emisi transportasi (asumsi 30 km/hari)
+    const transportEmission = (emissionFactors[transportation as keyof typeof emissionFactors] || 0) * 30 * 30; // per bulan
+    
+    // Hitung emisi listrik
+    const electricityEmission = electricityUsage * emissionFactors.electricity;
+    
+    // Hitung emisi konsumsi (per bulan)
+    const consumptionEmission = emissionFactors[consumptionPattern as keyof typeof emissionFactors] || 0;
+    
+    // Total jejak karbon (kg CO2/bulan)
+    const totalCarbonFootprint = transportEmission + electricityEmission + consumptionEmission;
+    
+    // Konversi ke ton CO2/tahun
+    const annualCarbonFootprint = (totalCarbonFootprint * 12) / 1000;
 
-    // 3. Pola Konsumsi
-    const consumptionEmissions: Record<string, number> = {
-      'boros': 5.0,
-      'sedang': 2.5,
-      'hemat': 1.0,
-      'sangat-hemat': 0.5
-    };
-    carbonFootprint += consumptionEmissions[consumptionPattern] || 0;
-
-    console.log('Carbon footprint calculated:', carbonFootprint);
+    console.log('Carbon footprint calculated:', { 
+      transportEmission, 
+      electricityEmission, 
+      consumptionEmission, 
+      totalCarbonFootprint,
+      annualCarbonFootprint 
+    });
 
     return new Response(
       JSON.stringify({ 
-        carbonFootprint: carbonFootprint.toFixed(2),
+        carbonFootprint: totalCarbonFootprint,
+        annualCarbonFootprint,
         breakdown: {
-          transportation: (transportEmissions[transportation] || 0).toFixed(2),
-          electricity: (electricityUsage * electricityEmissionFactor).toFixed(2),
-          consumption: (consumptionEmissions[consumptionPattern] || 0).toFixed(2)
+          transport: transportEmission,
+          electricity: electricityEmission,
+          consumption: consumptionEmission
         }
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -59,7 +73,7 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error calculating carbon footprint:', error);
     return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }),
+      JSON.stringify({ error: error.message }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
